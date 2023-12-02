@@ -1,7 +1,7 @@
 use std::collections::HashMap;
 
 pub fn day1() {
-    let input = include_str!("input/day1.txt");
+    let input = include_str!("input/day01.txt");
     part1(input);
     part2(input);
 }
@@ -12,15 +12,15 @@ fn part1(input: &str) {
         let digit1 = line.chars().find(|c: &char| c.is_digit(10));
         let digit2 = line.chars().rfind(|c: &char| c.is_digit(10));
         
-        let mut resultStr = String::new();
+        let mut result_str = String::new();
         if let Some(d) = digit1 {
-            resultStr.push(d);
+            result_str.push(d);
         }
         if let Some(d) = digit2 {
-            resultStr.push(d);
+            result_str.push(d);
         }
 
-        let result = resultStr.parse::<i32>();
+        let result = result_str.parse::<i32>();
         if let Ok(res) = result {
             sum += res;
         }
@@ -82,15 +82,15 @@ fn part2(input: &str) {
         let digit1 = find_first_digit(line, false);
         let digit2 = find_first_digit(line, true);
         
-        let mut resultStr = String::new();
+        let mut result_str = String::new();
         if let Some(d) = digit1 {
-            resultStr.push(d);
+            result_str.push(d);
         }
         if let Some(d) = digit2 {
-            resultStr.push(d);
+            result_str.push(d);
         }
 
-        let result = resultStr.parse::<i32>();
+        let result = result_str.parse::<i32>();
         if let Ok(res) = result {
             sum += res;
         }
