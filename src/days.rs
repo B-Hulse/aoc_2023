@@ -1,2 +1,2 @@
-mod day1;
-pub use day1::day1;
+mod day01;
+pub use day01::day1;
