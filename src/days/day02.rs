@@ -1,10 +1,12 @@
 use std::str::FromStr;
 
+const INPUT: &str = include_str!("input/day02.txt");
+
 #[derive(Debug)]
 enum Cube {
-    Red(u32),
-    Green(u32),
-    Blue(u32)
+    Red(i32),
+    Green(i32),
+    Blue(i32)
 }
 
 impl FromStr for Cube {
@@ -15,9 +17,9 @@ impl FromStr for Cube {
             return Err("Could not parse Cube");
         };
 
-        let num = num_str.parse::<u32>();
+        let num = num_str.parse::<i32>();
 
-        if let Err(e) = num {
+        if let Err(_) = num {
             return Err("Coult not parse Cube count");
         }
 
@@ -58,7 +60,7 @@ impl FromStr for Hand {
 
 #[derive(Debug)]
 struct Game {
-    id: u32,
+    id: i32,
     hands: Vec::<Hand>
 }
 
@@ -70,7 +72,7 @@ impl FromStr for Game {
             return Err("Failed to get header");
         };
 
-        let Some(id) = header.split_whitespace().nth(1).and_then(|s| s.parse::<u32>().ok()) else {
+        let Some(id) = header.split_whitespace().nth(1).and_then(|s| s.parse::<i32>().ok()) else {
             return Err("Failed to get ID");
         };
 
@@ -90,23 +92,16 @@ impl FromStr for Game {
     }
 }
 
-pub fn day2() {
-    //let input = include_str!("input/day02.txt");
-    let input = include_str!("input/day02.txt");
-    part1(input);
-    part2(input);
-}
-
-fn part1(input: &str) {
+pub fn part1() -> i32 {
     let mut games = Vec::new();
-    for line in input.split("\r\n") {
+    for line in INPUT.split("\r\n") {
         match Game::from_str(line) {
             Ok(g) => games.push(g),
             Err(e) => println!("ERROR: Could not parse \"{}\": {}", line, e)
         }
     }
 
-    let sum: u32 = games.iter().filter(|&g| {
+    let sum: i32 = games.iter().filter(|&g| {
         g.hands.iter().all(|h| {
             h.cubes.iter().all(|c| {
                 match c {
@@ -118,19 +113,19 @@ fn part1(input: &str) {
         })
     }).map(|g| g.id).sum();
 
-    println!("Part 1: {}", sum);
+    sum
 }
 
-fn part2(input: &str) {
+pub fn part2() -> i32 {
     let mut games = Vec::new();
-    for line in input.split("\r\n") {
+    for line in INPUT.split("\r\n") {
         match Game::from_str(line) {
             Ok(g) => games.push(g),
             Err(e) => println!("ERROR: Could not parse \"{}\": {}", line, e)
         }
     }
 
-    let sum: u32= games.iter().map(|g| {
+    let sum: i32= games.iter().map(|g| {
         let mut min_green = 0;
         let mut min_red = 0;
         let mut min_blue = 0;
@@ -148,5 +143,5 @@ fn part2(input: &str) {
         min_blue * min_green * min_red
     }).sum();
 
-    println!("Part 2: {}", sum);
+    sum
 }

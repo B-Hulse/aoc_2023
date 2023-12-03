@@ -1,14 +1,10 @@
 use std::collections::HashMap;
 
-pub fn day1() {
-    let input = include_str!("input/day01.txt");
-    part1(input);
-    part2(input);
-}
+const INPUT: &str = include_str!("input/day01.txt");
 
-fn part1(input: &str) {
+pub fn part1() -> i32 {
     let mut sum = 0;
-    for line in input.split("\r\n") {
+    for line in INPUT.split("\r\n") {
         let digit1 = line.chars().find(|c: &char| c.is_digit(10));
         let digit2 = line.chars().rfind(|c: &char| c.is_digit(10));
         
@@ -25,7 +21,7 @@ fn part1(input: &str) {
             sum += res;
         }
     }
-    println!("Part 1: {}", sum);
+    sum
 }
 
 fn find_first_digit(input: &str, reverse: bool) -> Option<char> {
@@ -76,9 +72,9 @@ fn find_first_digit(input: &str, reverse: bool) -> Option<char> {
     }
 }
 
-fn part2(input: &str) {
+pub fn part2() -> i32{
     let mut sum = 0;
-    for line in input.split("\r\n") {
+    for line in INPUT.split("\r\n") {
         let digit1 = find_first_digit(line, false);
         let digit2 = find_first_digit(line, true);
         
@@ -95,5 +91,6 @@ fn part2(input: &str) {
             sum += res;
         }
     }
-    println!("Part 2: {}", sum);
+    
+    sum
 }
