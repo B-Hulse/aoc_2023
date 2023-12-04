@@ -3,6 +3,7 @@ use std::{str::FromStr, collections::HashSet};
 
 const INPUT: &str = include_str!("input/day04.txt");
 
+#[derive(Debug)]
 struct Card {
     _id: i32,
     winning_numbers: HashSet<i32>,
@@ -29,7 +30,7 @@ impl FromStr for Card {
             return Err("Failed to find header");
         };
 
-        let Some(id) = header.split_whitespace().nth(1).and_then(|s| s.parse::<i32>().ok()) else {
+        let Some(id) = header.split_whitespace().last().and_then(|s| s.parse::<i32>().ok()) else {
             return Err("Failed to get ID");
         };
 
@@ -49,8 +50,12 @@ impl FromStr for Card {
 }
 
 impl Card {
+    fn get_matching_count(&self) -> usize {
+        self.winning_numbers.intersection(&self.present_numbers).count()
+    }
+
     fn get_score(&self) -> i32 {
-        let won_nums = self.winning_numbers.intersection(&self.present_numbers).count();
+        let won_nums = self.get_matching_count();
 
         if won_nums <= 0 {
             return 0;
@@ -68,6 +73,34 @@ pub fn part1() -> i32 {
         .sum()
 }
 
+struct CardCollection {
+    card: Card,
+    count: i32
+}
+
 pub fn part2() -> i32 {
-    0
+    let mut cards : Vec<_> = INPUT.lines()
+                    .filter_map(|l| Card::from_str(l).ok())
+                    .map(|c| {
+                        CardCollection {
+                            card: c,
+                            count: 1
+                        }
+                    })
+                    .collect();
+    
+    for card_i in 0..cards.len() {
+        let card_count = cards[card_i].count;
+        let card_match_count = cards[card_i].card.get_matching_count();
+
+        if card_match_count > 0 {
+            for match_i in 1..=card_match_count {
+                cards.get_mut(card_i + match_i).unwrap().count += card_count;
+            }
+        }
+    }
+
+    let sum = cards.iter().map(|c| c.count).sum();
+
+    sum
 }
