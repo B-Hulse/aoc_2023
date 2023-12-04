@@ -45,6 +45,10 @@ fn main()
                 PartRunner::new(day3_part1, "Day 3 Part 1".to_string()).run();
                 PartRunner::new(day3_part2, "Day 3 Part 2".to_string()).run();
             },
+            4 => {
+                PartRunner::new(day4_part1, "Day 4 Part 1".to_string()).run();
+                PartRunner::new(day4_part2, "Day 4 Part 2".to_string()).run();
+            },
             _ => println!("Invalid day"),
         }
     }
@@ -60,4 +64,6 @@ fn run_all_days() {
     PartRunner::new(day2_part2, "Day 2 Part 2".to_string()).run();
     PartRunner::new(day3_part1, "Day 3 Part 1".to_string()).run();
     PartRunner::new(day3_part2, "Day 3 Part 2".to_string()).run();
+    PartRunner::new(day4_part1, "Day 4 Part 1".to_string()).run();
+    PartRunner::new(day4_part2, "Day 4 Part 2".to_string()).run();
 }
