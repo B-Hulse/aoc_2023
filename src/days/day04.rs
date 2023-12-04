@@ -5,33 +5,22 @@ const INPUT: &str = include_str!("input/day04.txt");
 
 #[derive(Debug)]
 struct Card {
-    _id: i32,
     winning_numbers: HashSet<i32>,
     present_numbers: HashSet<i32>
 }
 
 fn get_num_list(s: &str) -> HashSet<i32> {
-    let mut nums = HashSet::new();
-
-    for num_str in s.split(" ") {
-        if let Ok(num) = num_str.parse::<i32>() {
-            nums.insert(num);
-        }
-    }
-    
-    nums
+    s.split_ascii_whitespace()
+        .filter_map(|n| n.parse::<i32>().ok())
+        .collect()
 }
 
 impl FromStr for Card {
     type Err = &'static str;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        let Some((header, body)) = s.split_once(":") else {
-            return Err("Failed to find header");
-        };
-
-        let Some(id) = header.split_whitespace().last().and_then(|s| s.parse::<i32>().ok()) else {
-            return Err("Failed to get ID");
+        let Some((_, body)) = s.split_once(":") else {
+            return Err("Failed to find body");
         };
 
         let Some((winning_nums_str, present_nums_str)) = body.split_once("|") else {
@@ -42,7 +31,6 @@ impl FromStr for Card {
         let present_nums = get_num_list(present_nums_str);
 
         Ok(Self {
-            _id: id,
             winning_numbers: winning_nums,
             present_numbers: present_nums
         })

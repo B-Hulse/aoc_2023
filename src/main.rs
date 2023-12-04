@@ -4,25 +4,44 @@ mod days;
 
 use days::*;
 
-// Struct that takes a function and runs that function, outputting the time it took to run.
-struct PartRunner {
-    func: fn() -> i32,
+#[derive(Clone)]
+struct Day {
     name: String,
+    part1: fn() -> i32,
+    part2: fn() -> i32
 }
 
-impl PartRunner {
-    fn new(func: fn() -> i32, name: String) -> PartRunner {
-        PartRunner { 
-            func: func,
-            name: name
-         }
+impl Day {
+    fn new(name: &str, part1: fn()->i32, part2: fn()->i32) -> Day {
+        Day { 
+            name: name.to_string(),
+            part1: part1, 
+            part2: part2
+        }
+    }
+}
+
+struct DayRunner {
+    day: Day
+}
+
+impl DayRunner {
+    fn new(day: Day) -> DayRunner {
+        DayRunner { 
+            day: day
+        }
     }
 
     fn run(&self) {
         let start = Instant::now();
-        let ret = (self.func)();
+        let ret = (self.day.part1)();
         let duration = start.elapsed();
-        println!("{}: {} ({:?})", self.name, ret, duration);
+        println!("{} Part 1: {} ({:?})", self.day.name, ret, duration);
+
+        let start = Instant::now();
+        let ret = (self.day.part2)();
+        let duration = start.elapsed();
+        println!("{} Part 2: {} ({:?})", self.day.name, ret, duration);
     }
 }
 
@@ -30,40 +49,30 @@ fn main()
 {
     let args: Vec<String> = std::env::args().collect();
 
+    let days = vec![
+        Day::new("Day 1", day1_part1,  day1_part2),
+        Day::new("Day 2", day2_part1,  day2_part2),
+        Day::new("Day 3", day3_part1,  day3_part2),
+        Day::new("Day 4", day4_part1,  day4_part2)
+    ];
+
     if args.len() > 1 {
-        let day = args[1].parse::<u8>().unwrap();
-        match day {
-            1 => {
-                PartRunner::new(day1_part1, "Day 1 Part 1".to_string()).run();
-                PartRunner::new(day1_part2, "Day 1 Part 2".to_string()).run();
-            },
-            2 => {
-                PartRunner::new(day2_part1, "Day 2 Part 1".to_string()).run();
-                PartRunner::new(day2_part2, "Day 2 Part 2".to_string()).run();
-            },
-            3 => {
-                PartRunner::new(day3_part1, "Day 3 Part 1".to_string()).run();
-                PartRunner::new(day3_part2, "Day 3 Part 2".to_string()).run();
-            },
-            4 => {
-                PartRunner::new(day4_part1, "Day 4 Part 1".to_string()).run();
-                PartRunner::new(day4_part2, "Day 4 Part 2".to_string()).run();
-            },
-            _ => println!("Invalid day"),
+        let day_i = args[1].parse::<usize>().unwrap() - 1;
+        
+        if let Some(day) = days.get(day_i) {
+            DayRunner::new(day.clone()).run();
+        }
+        else {
+            println!("Invalid Day")
         }
     }
     else {
-        run_all_days()
+        run_all_days(&days);
     }
 }
 
-fn run_all_days() {
-    PartRunner::new(day1_part1, "Day 1 Part 1".to_string()).run();
-    PartRunner::new(day1_part2, "Day 1 Part 2".to_string()).run();
-    PartRunner::new(day2_part1, "Day 2 Part 1".to_string()).run();
-    PartRunner::new(day2_part2, "Day 2 Part 2".to_string()).run();
-    PartRunner::new(day3_part1, "Day 3 Part 1".to_string()).run();
-    PartRunner::new(day3_part2, "Day 3 Part 2".to_string()).run();
-    PartRunner::new(day4_part1, "Day 4 Part 1".to_string()).run();
-    PartRunner::new(day4_part2, "Day 4 Part 2".to_string()).run();
+fn run_all_days(days: &Vec<Day>) {
+    days.iter().for_each(|day| {
+        DayRunner::new(day.clone()).run();
+    });
 }
