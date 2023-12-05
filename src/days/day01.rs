@@ -2,7 +2,7 @@ use std::collections::HashMap;
 
 const INPUT: &str = include_str!("input/day01.txt");
 
-pub fn part1() -> i32 {
+pub fn part1() -> i64 {
     let mut sum = 0;
     for line in INPUT.split("\r\n") {
         let digit1 = line.chars().find(|c: &char| c.is_digit(10));
@@ -16,7 +16,7 @@ pub fn part1() -> i32 {
             result_str.push(d);
         }
 
-        let result = result_str.parse::<i32>();
+        let result = result_str.parse::<i64>();
         if let Ok(res) = result {
             sum += res;
         }
@@ -72,7 +72,7 @@ fn find_first_digit(input: &str, reverse: bool) -> Option<char> {
     }
 }
 
-pub fn part2() -> i32{
+pub fn part2() -> i64{
     let mut sum = 0;
     for line in INPUT.split("\r\n") {
         let digit1 = find_first_digit(line, false);
@@ -86,7 +86,7 @@ pub fn part2() -> i32{
             result_str.push(d);
         }
 
-        let result = result_str.parse::<i32>();
+        let result = result_str.parse::<i64>();
         if let Ok(res) = result {
             sum += res;
         }

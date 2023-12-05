@@ -4,9 +4,9 @@ const INPUT: &str = include_str!("input/day02.txt");
 
 #[derive(Debug)]
 enum Cube {
-    Red(i32),
-    Green(i32),
-    Blue(i32)
+    Red(i64),
+    Green(i64),
+    Blue(i64)
 }
 
 impl FromStr for Cube {
@@ -17,7 +17,7 @@ impl FromStr for Cube {
             return Err("Could not parse Cube");
         };
 
-        let num = num_str.parse::<i32>();
+        let num = num_str.parse::<i64>();
 
         if let Err(_) = num {
             return Err("Coult not parse Cube count");
@@ -60,7 +60,7 @@ impl FromStr for Hand {
 
 #[derive(Debug)]
 struct Game {
-    id: i32,
+    id: i64,
     hands: Vec::<Hand>
 }
 
@@ -72,7 +72,7 @@ impl FromStr for Game {
             return Err("Failed to get header");
         };
 
-        let Some(id) = header.split_whitespace().nth(1).and_then(|s| s.parse::<i32>().ok()) else {
+        let Some(id) = header.split_whitespace().nth(1).and_then(|s| s.parse::<i64>().ok()) else {
             return Err("Failed to get ID");
         };
 
@@ -92,7 +92,7 @@ impl FromStr for Game {
     }
 }
 
-pub fn part1() -> i32 {
+pub fn part1() -> i64 {
     let mut games = Vec::new();
     for line in INPUT.split("\r\n") {
         match Game::from_str(line) {
@@ -101,7 +101,7 @@ pub fn part1() -> i32 {
         }
     }
 
-    let sum: i32 = games.iter().filter(|&g| {
+    let sum: i64 = games.iter().filter(|&g| {
         g.hands.iter().all(|h| {
             h.cubes.iter().all(|c| {
                 match c {
@@ -116,7 +116,7 @@ pub fn part1() -> i32 {
     sum
 }
 
-pub fn part2() -> i32 {
+pub fn part2() -> i64 {
     let mut games = Vec::new();
     for line in INPUT.split("\r\n") {
         match Game::from_str(line) {
@@ -125,7 +125,7 @@ pub fn part2() -> i32 {
         }
     }
 
-    let sum: i32= games.iter().map(|g| {
+    let sum: i64= games.iter().map(|g| {
         let mut min_green = 0;
         let mut min_red = 0;
         let mut min_blue = 0;

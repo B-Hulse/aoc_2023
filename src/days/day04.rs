@@ -5,13 +5,13 @@ const INPUT: &str = include_str!("input/day04.txt");
 
 #[derive(Debug)]
 struct Card {
-    winning_numbers: HashSet<i32>,
-    present_numbers: HashSet<i32>
+    winning_numbers: HashSet<i64>,
+    present_numbers: HashSet<i64>
 }
 
-fn get_num_list(s: &str) -> HashSet<i32> {
+fn get_num_list(s: &str) -> HashSet<i64> {
     s.split_ascii_whitespace()
-        .filter_map(|n| n.parse::<i32>().ok())
+        .filter_map(|n| n.parse::<i64>().ok())
         .collect()
 }
 
@@ -42,19 +42,19 @@ impl Card {
         self.winning_numbers.intersection(&self.present_numbers).count()
     }
 
-    fn get_score(&self) -> i32 {
+    fn get_score(&self) -> i64 {
         let won_nums = self.get_matching_count();
 
         if won_nums <= 0 {
             return 0;
         }
         else {
-            2_i32.pow((won_nums - 1) as u32)
+            2_i64.pow((won_nums - 1) as u32)
         }
     }
 }
 
-pub fn part1() -> i32 {
+pub fn part1() -> i64 {
     INPUT.lines()
         .filter_map(|l| Card::from_str(l).ok())
         .map(|c| c.get_score())
@@ -63,10 +63,10 @@ pub fn part1() -> i32 {
 
 struct CardCollection {
     card: Card,
-    count: i32
+    count: i64
 }
 
-pub fn part2() -> i32 {
+pub fn part2() -> i64 {
     let mut cards : Vec<_> = INPUT.lines()
                     .filter_map(|l| Card::from_str(l).ok())
                     .map(|c| {

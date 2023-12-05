@@ -7,12 +7,12 @@ use days::*;
 #[derive(Clone)]
 struct Day {
     name: String,
-    part1: fn() -> i32,
-    part2: fn() -> i32
+    part1: fn() -> i64,
+    part2: fn() -> i64
 }
 
 impl Day {
-    fn new(name: &str, part1: fn()->i32, part2: fn()->i32) -> Day {
+    fn new(name: &str, part1: fn()->i64, part2: fn()->i64) -> Day {
         Day { 
             name: name.to_string(),
             part1: part1, 
@@ -53,7 +53,8 @@ fn main()
         Day::new("Day 1", day1_part1,  day1_part2),
         Day::new("Day 2", day2_part1,  day2_part2),
         Day::new("Day 3", day3_part1,  day3_part2),
-        Day::new("Day 4", day4_part1,  day4_part2)
+        Day::new("Day 4", day4_part1,  day4_part2),
+        Day::new("Day 5", day5_part1,  day5_part2)
     ];
 
     if args.len() > 1 {

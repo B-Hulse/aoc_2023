@@ -2,7 +2,7 @@ use std::collections::HashSet;
 
 const INPUT: &str = include_str!("input/day03.txt");
 
-pub fn part1() -> i32 {
+pub fn part1() -> i64 {
     let mut symbol_neighbourhood = HashSet::new();
 
     for (y, line) in INPUT.lines().enumerate() {
@@ -48,10 +48,10 @@ pub fn part1() -> i32 {
         }
     }
 
-    sum as i32
+    sum as i64
 }
 
-pub fn part2() -> i32 {
+pub fn part2() -> i64 {
     let mut gears = Vec::new();
     for (y, line) in INPUT.lines().enumerate() {
         for (x, c) in line.trim().chars().enumerate() {
@@ -112,5 +112,5 @@ pub fn part2() -> i32 {
         .map(|g| g.iter().product::<u32>())
         .sum::<u32>();
 
-    sum as i32
+    sum as i64
 }
