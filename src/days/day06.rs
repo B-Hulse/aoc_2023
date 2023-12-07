@@ -7,28 +7,13 @@ struct Race {
 
 impl Race {
     fn find_ways_to_beat(&self) -> i64 {
-        let mut lowest_win = None;
-        let mut highest_win = None;
-
         for charge_time in 0..self.time {
-            let winning = ((self.time - charge_time) * charge_time) > self.distance;
-            if lowest_win.is_none() && winning {
-                lowest_win = Some(charge_time);
-            }
-            else if lowest_win.is_some() && highest_win.is_none() && !winning {
-                highest_win = Some(charge_time - 1);
+            if ((self.time - charge_time) * charge_time) > self.distance {
+                return self.time - (charge_time * 2) + 1;
             }
         }
 
-        if lowest_win.is_some() && highest_win.is_some() {
-            highest_win.unwrap() - lowest_win.unwrap() + 1
-        }
-        else if lowest_win.is_some() {
-            self.time - lowest_win.unwrap()
-        }
-        else {
-            0
-        }
+        return 0;
     }
 }
 
@@ -58,6 +43,7 @@ pub fn part2() -> i64 {
                             .collect::<String>()
                             .parse::<i64>()
                             .unwrap();
+
     let dist = lines[1].chars()
                             .filter(|c| c.is_digit(10))
                             .collect::<String>()
