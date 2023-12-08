@@ -5,6 +5,7 @@ mod day04;
 mod day05;
 mod day06;
 mod day07;
+mod day08;
 
 pub use day01::part1 as day1_part1;
 pub use day01::part2 as day1_part2;
@@ -20,3 +21,5 @@ pub use day06::part1 as day6_part1;
 pub use day06::part2 as day6_part2;
 pub use day07::part1 as day7_part1;
 pub use day07::part2 as day7_part2;
+pub use day08::part1 as day8_part1;
+pub use day08::part2 as day8_part2;
