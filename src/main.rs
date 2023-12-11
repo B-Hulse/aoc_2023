@@ -59,7 +59,8 @@ fn main()
         Day::new("Day 7", day7_part1,  day7_part2),
         Day::new("Day 8", day8_part1,  day8_part2),
         Day::new("Day 9", day9_part1,  day9_part2),
-        Day::new("Day 10", day10_part1, day10_part2)
+        Day::new("Day 10", day10_part1, day10_part2),
+        Day::new("Day 11", day11_part1, day11_part2),
     ];
 
     if args.len() > 1 {

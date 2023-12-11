@@ -8,6 +8,7 @@ mod day07;
 mod day08;
 mod day09;
 mod day10;
+mod day11;
 
 pub use day01::part1 as day1_part1;
 pub use day01::part2 as day1_part2;
@@ -29,3 +30,5 @@ pub use day09::part1 as day9_part1;
 pub use day09::part2 as day9_part2;
 pub use day10::part1 as day10_part1;
 pub use day10::part2 as day10_part2;
+pub use day11::part1 as day11_part1;
+pub use day11::part2 as day11_part2;
